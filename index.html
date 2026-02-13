@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ffe6f0,#ff4d6d);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#fff;
+    position:relative;
+}
+
+/* Floating Hearts */
+.heart{
+    position:fixed;
+    bottom:-50px;
+    animation:floatUp linear infinite;
+    opacity:0;
+}
+
+@keyframes floatUp{
+    0%{transform:translateY(0) scale(1); opacity:0;}
+    10%{opacity:1;}
+    90%{opacity:1;}
+    100%{transform:translateY(-110vh) scale(1.2); opacity:0;}
+}
+
+/* Main Container */
+.container{
+    z-index:10;
+    padding:20px;
+    max-width:800px;
+}
+
+.bear{
+    font-size:60px;
+    animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+}
+
+h1{
+    font-family:'Dancing Script',cursive;
+    font-size:48px;
+    margin-top:10px;
+}
+
+.subtitle{
+    font-style:italic;
+    margin:20px 0;
+    font-size:16px;
+    line-height:1.6;
+    font-weight:bold;
+}
+
+.closing{
+    margin-top:15px;
+    font-size:15px;
+}
+
+/* Buttons */
+.buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+}
+
+#yesBtn{
+    background:linear-gradient(45deg,#ff003c,#ff5f6d);
+    border:none;
+    padding:15px 40px;
+    border-radius:50px;
+    font-size:18px;
+    color:#fff;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 10px rgba(255,0,60,0.6);
+}
+
+#yesBtn:hover{
+    box-shadow:0 0 20px rgba(255,0,60,1);
+    transform:scale(1.05);
+}
+
+#noBtn{
+    background:#fff;
+    color:#ff003c;
+    border:2px solid #ff003c;
+    padding:10px 25px;
+    border-radius:50px;
+    font-size:14px;
+    cursor:pointer;
+    position:relative;
+}
+
+/* Celebration */
+.celebration{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#ff4d6d,#ff003c);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    z-index:100;
+    display:none;
+    padding:20px;
+    text-align:center;
+}
+
+.yay{
+    font-size:60px;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+.spin{
+    font-size:50px;
+    margin:20px 0;
+    animation:spin 2s linear infinite;
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:8px;
+    height:8px;
+    top:50%;
+    left:50%;
+    opacity:0.9;
+    animation:explode 1.5s forwards ease-out;
+}
+
+@keyframes explode{
+    to{
+        transform:translate(var(--x),var(--y)) rotate(720deg);
+        opacity:0;
+    }
+}
+
+@media(max-width:600px){
+    h1{font-size:34px;}
+    .bear{font-size:50px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContent">
+    <div class="bear">🐻</div>
+    <h1>Will You Be My Valentine ?</h1>
+
+    <div class="subtitle">
+        <b>
+        राधा आपके साथ हर पल लगता है जैसे खुशियों का सहारा आपके बिना जीवन लगता है थोड़ा सा अधूरा 
+        आप कृष्ण की हो राधा आपके बिना कृष्ण आधार आपके साथ ना आएगी जीवन में कोई भी बाधा 
+        यहीं है हमारा आपसे वादा आज कृष्ण दिल से पूछता है आपसे क्या आप बनोगी हमारी राधा ?
+        </b>
+    </div>
+
+    <div class="closing">Every love story is beautiful, but ours is my favourite</div>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+</div>
+
+<div class="celebration" id="celebration">
+    <div class="yay">Yayyy!!</div>
+    <div class="spin">💖</div>
+    <div style="margin-top:15px; font-weight:bold;">
+        i loveeeeeee youuuuuu so muchhhh meri radha meri jaan 
+        i loveeeee youuuu the most my everything meri ardhaangini 
+        meri dharam patni😭🧿🎀💖💋✨️🫶
+    </div>
+</div>
+
+<script>
+/* Floating Hearts */
+const hearts=[];
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💗";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(20+Math.random()*30)+"px";
+    heart.style.animationDuration=(4+Math.random()*4)+"s";
+    document.body.appendChild(heart);
+    hearts.push(heart);
+}
+for(let i=0;i<15;i++){ createHeart(); }
+
+/* No Button Running Away */
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const messages=[
+"Nope, not an option!",
+"Try again!",
+"You sure about that?",
+"Not happening!",
+"Think again!"
+];
+let msgIndex=0;
+
+function moveNoButton(){
+    const yesRect=yesBtn.getBoundingClientRect();
+    const padding=20;
+    let x,y;
+    do{
+        x=Math.random()*(window.innerWidth-120);
+        y=Math.random()*(window.innerHeight-60);
+    }while(
+        x>yesRect.left-padding &&
+        x<yesRect.right+padding &&
+        y>yesRect.top-padding &&
+        y<yesRect.bottom+padding
+    );
+
+    noBtn.style.position="fixed";
+    noBtn.style.left=x+"px";
+    noBtn.style.top=y+"px";
+    noBtn.innerText=messages[msgIndex];
+    msgIndex=(msgIndex+1)%messages.length;
+}
+
+noBtn.addEventListener("click",moveNoButton);
+noBtn.addEventListener("touchstart",moveNoButton);
+
+/* Yes Button Celebration */
+yesBtn.addEventListener("click",()=>{
+    document.getElementById("mainContent").style.display="none";
+    hearts.forEach(h=>h.remove());
+    document.getElementById("celebration").style.display="flex";
+    launchConfetti();
+});
+
+function launchConfetti(){
+    for(let i=0;i<120;i++){
+        const conf=document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.background=`hsl(${Math.random()*360},100%,50%)`;
+        conf.style.setProperty('--x',(Math.random()*800-400)+"px");
+        conf.style.setProperty('--y',(Math.random()*800-400)+"px");
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),1500);
+    }
+}
+</script>
+
+</body>
+</html>
